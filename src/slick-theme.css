@@ -148,8 +148,6 @@
     border: 0;
     outline: none;
     background: transparent;
-    
-    border-right:1px solid rgba(225,225,225,.28);
 }
 
 .slick-dots li:last-child button{
