@@ -39,7 +39,7 @@ const Backdrop = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: url(${(props) => props.bgImage}) no-repeat center 100vh;
+  background: url(${(props) => props.bgImage}) no-repeat center 103vh;
   background-size: contain;
   filter: blur(2.5px);
   opacity: 0.4;
@@ -87,7 +87,7 @@ const Data = styled.div`
 const Title = styled.h1`
   font-size: 25px;
   font-weight: 600;
-  margin: 15px 0;
+  margin: 30px 0 20px 0;
 `;
 
 const ItemLeft = styled.div`
