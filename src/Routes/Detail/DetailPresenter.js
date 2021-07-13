@@ -33,26 +33,15 @@ const SimilarWrap = styled.div`
 `;
 
 const Backdrop = styled.div`
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url(${(props) => props.bgImage}) no-repeat center 103vh;
-  background-size: contain;
-  filter: blur(2.5px);
-  opacity: 0.4;
+  height: 50vh;
+  background: url(${(props) => props.bgImage}) no-repeat center center;
+  background-size: cover;
 `;
 
 const YouTubes = styled(YouTube)`
   display: block;
   width: 99vw;
-  height: 90vh;
-  margin-bottom: 120px;
-  transform: scale(1.23);
-  position: relative;
-  z-index: 1;
+  height: 94vh;
 `;
 
 const opts = {
@@ -64,12 +53,11 @@ const opts = {
 };
 
 const Content = styled.div`
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  position: relative;
-  z-index: 1;
   padding: 0 50px;
 `;
 
@@ -156,15 +144,15 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
           result.videos.results.map((video) => video.key).shift()
         }
       />
-      <Backdrop
-        bgImage={
-          result.backdrop_path
-            ? `https://image.tmdb.org/t/p/original${result.backdrop_path}`
-            : require("../../assets/noBgOriginal.png").default
-        }
-      />
       <Content>
         <Data>
+          <Backdrop
+            bgImage={
+              result.backdrop_path
+                ? `https://image.tmdb.org/t/p/original${result.backdrop_path}`
+                : require("../../assets/noBgOriginal.png").default
+            }
+          />
           <Title>{result.title ? result.title : result.name}</Title>
           <ItemLeft>
             <Item1>
