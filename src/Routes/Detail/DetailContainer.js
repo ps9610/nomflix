@@ -69,7 +69,7 @@ export default class extends React.Component {
 
   render() {
     const { result, loading, error, keywords, similar } = this.state;
-    //console.log(result);
+    //console.log(similar);
     return (
       <DetailPresenter
         result={result}

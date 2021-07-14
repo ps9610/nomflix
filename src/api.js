@@ -39,7 +39,7 @@ export const tvApi = {
       },
     }),
   keyword: (id) => api.get(`tv/${id}/keywords`),
-  similar: (id) => api.get(`movie/${id}/similar`),
+  similar: (id) => api.get(`tv/${id}/similar`),
   search: (term) =>
     api.get("search/tv", {
       params: {

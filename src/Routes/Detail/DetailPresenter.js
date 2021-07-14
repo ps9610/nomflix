@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const SimilarWrap = styled.div`
   font-size: 18px;
-  height: 82vh;
+  height: 80vh;
   overflow: scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -33,15 +33,22 @@ const SimilarWrap = styled.div`
 `;
 
 const Backdrop = styled.div`
-  height: 50vh;
+  width: 100vw;
+  height: 100%;
   background: url(${(props) => props.bgImage}) no-repeat center center;
   background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  filter: blur(2.5px);
+  opacity: 0.2;
 `;
 
 const YouTubes = styled(YouTube)`
   display: block;
-  width: 99vw;
-  height: 94vh;
+  width: 40vw;
+  height: 50vh;
 `;
 
 const opts = {
@@ -53,6 +60,7 @@ const opts = {
 };
 
 const Content = styled.div`
+  position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -137,20 +145,20 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
           {"  "}| Nomfilx
         </title>
       </Helmet>
-      <YouTubes
-        opts={opts}
-        videoId={
-          result.videos.results &&
-          result.videos.results.map((video) => video.key).shift()
+      <Backdrop
+        bgImage={
+          result.backdrop_path
+            ? `https://image.tmdb.org/t/p/original${result.backdrop_path}`
+            : require("../../assets/noBgOriginal.png").default
         }
       />
       <Content>
         <Data>
-          <Backdrop
-            bgImage={
-              result.backdrop_path
-                ? `https://image.tmdb.org/t/p/original${result.backdrop_path}`
-                : require("../../assets/noBgOriginal.png").default
+          <YouTubes
+            opts={opts}
+            videoId={
+              result.videos.results &&
+              result.videos.results.map((video) => video.key).shift()
             }
           />
           <Title>{result.title ? result.title : result.name}</Title>
@@ -176,12 +184,12 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
             <Item1>
               {result.imdb_id ? (
                 <button>
-                  <Link
-                    to={`//www.imdb.com/title/${result.imdb_id}`}
+                  <a
+                    href={`https://www.imdb.com/title/${result.imdb_id}`}
                     target="_blank"
                   >
                     IMDB
-                  </Link>
+                  </a>
                 </button>
               ) : (
                 <button>
@@ -236,6 +244,7 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
                   <Similar
                     key={similars.id}
                     id={similars.id}
+                    isMovie={similars.title ? true : false}
                     title={similars.title ? similars.title : similars.name}
                     imageUrl={similars.poster_path}
                     year={
@@ -244,7 +253,6 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
                       (similars.first_air_date &&
                         similars.first_air_date.substring(0, 4))
                     }
-                    isMovie={similars.title ? true : false}
                   />
                 ))
               : `🚫콘텐츠를 준비중입니다🚫`}
