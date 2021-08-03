@@ -17,6 +17,7 @@ const Container = styled.div`
 `;
 
 const SimilarWrap = styled.div`
+  margin-top: 20px;
   font-size: 18px;
   height: 80vh;
   overflow: scroll;
@@ -34,21 +35,17 @@ const SimilarWrap = styled.div`
 
 const Backdrop = styled.div`
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background: url(${(props) => props.bgImage}) no-repeat center center;
   background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 0;
-  filter: blur(2.5px);
   opacity: 0.2;
 `;
 
 const YouTubes = styled(YouTube)`
   display: block;
-  width: 40vw;
-  height: 50vh;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const opts = {
@@ -60,18 +57,19 @@ const opts = {
 };
 
 const Content = styled.div`
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  padding: 0 50px;
+  width: 100vw;
+  height: 100vh;
+  padding: 50px;
 `;
 
 const Data = styled.div`
-  width: 40%;
-  margin: 0 auto;
+  width: 60%;
   button {
     border: 0;
     font-size: 15px;
@@ -81,9 +79,8 @@ const Data = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 25px;
-  font-weight: 600;
-  margin: 30px 0 20px 0;
+  font-size: 35px;
+  margin: 30px 0 50px 0;
 `;
 
 const ItemLeft = styled.div`
@@ -92,8 +89,8 @@ const ItemLeft = styled.div`
 `;
 
 const ItemRight = styled.div`
-  margin-left: 2%;
-  width: 38%;
+  margin-left: 3%;
+  width: 37%;
   float: right;
 `;
 
@@ -123,8 +120,8 @@ const Divider = styled.span`
 
 const Overview = styled.p`
   margin: 10px 0;
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 20px;
+  line-height: 2;
 `;
 
 const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
@@ -145,6 +142,13 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
           {"  "}| Nomfilx
         </title>
       </Helmet>
+      <YouTubes
+        opts={opts}
+        videoId={
+          result.videos.results &&
+          result.videos.results.map((video) => video.key).shift()
+        }
+      />
       <Backdrop
         bgImage={
           result.backdrop_path
@@ -154,13 +158,6 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
       />
       <Content>
         <Data>
-          <YouTubes
-            opts={opts}
-            videoId={
-              result.videos.results &&
-              result.videos.results.map((video) => video.key).shift()
-            }
-          />
           <Title>{result.title ? result.title : result.name}</Title>
           <ItemLeft>
             <Item1>
@@ -236,28 +233,26 @@ const DetailPresenter = ({ result, keywords, similar, error, loading }) =>
             </Item2>
           </ItemRight>
         </Data>
-        <Data>
+        <SimilarWrap>
           <Title>비슷한 콘텐츠</Title>
-          <SimilarWrap>
-            {similar.length > 0
-              ? similar.map((similars) => (
-                  <Similar
-                    key={similars.id}
-                    id={similars.id}
-                    isMovie={similars.title ? true : false}
-                    title={similars.title ? similars.title : similars.name}
-                    imageUrl={similars.poster_path}
-                    year={
-                      (similars.release_date &&
-                        similars.release_date.substring(0, 4)) ||
-                      (similars.first_air_date &&
-                        similars.first_air_date.substring(0, 4))
-                    }
-                  />
-                ))
-              : `🚫콘텐츠를 준비중입니다🚫`}
-          </SimilarWrap>
-        </Data>
+          {similar.length > 0
+            ? similar.map((similars) => (
+                <Similar
+                  key={similars.id}
+                  id={similars.id}
+                  isMovie={similars.title ? true : false}
+                  title={similars.title ? similars.title : similars.name}
+                  imageUrl={similars.poster_path}
+                  year={
+                    (similars.release_date &&
+                      similars.release_date.substring(0, 4)) ||
+                    (similars.first_air_date &&
+                      similars.first_air_date.substring(0, 4))
+                  }
+                />
+              ))
+            : `🚫콘텐츠를 준비중입니다🚫`}
+        </SimilarWrap>
       </Content>
     </Container>
   );
