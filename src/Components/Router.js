@@ -11,6 +11,7 @@ import Movie from "Routes/Movie";
 import TV from "Routes/TV";
 import Search from "Routes/Search";
 import Detail from "Routes/Detail";
+import Similars from "Routes/Similars";
 
 export default () => (
   <Router>
@@ -23,6 +24,8 @@ export default () => (
         <Route path="/search" component={Search} />
         <Route path="/movie/:id" component={Detail} />
         <Route path="/show/:id" component={Detail} />
+        <Route path="/movie/:id/similars" component={Similars} />
+        <Route path="/show/:id/similars" component={Similars} />
         <Redirect from="*" to="/" />
       </Switch>
     </>
